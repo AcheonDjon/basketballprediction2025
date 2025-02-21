@@ -1,79 +1,16 @@
-# RAPTOR Rating System Project Summary
+Phase 1: Basketball Tournament Game Predictions
 
-## Project Overview
-We developed a basketball team rating system inspired by FiveThirtyEight's RAPTOR, adapted for team evaluation using available game statistics. The system evolved from a basic rating to an enhanced version that considers more contextual factors.
+You’re the analytics staff for a basketball team, the group behind the numbers that drive performance. It’s the offseason, and your task is clear: analyze the previous season to uncover trends, rethink strategies, and predict future success. You and your team have been hard at work analyzing and using the data to come up with the best answers. Now it's time to share your predictions!
 
-## What We Built
+The bracket below summarizes the Main Competition tasks. 
 
-### 1. Base Rating System
-- **Core Components**
-  - Shooting efficiency (30%)
-  - Net rating impact (25%)
-  - Win percentage (20%)
-  - Basic game statistics
+![image](https://github.com/user-attachments/assets/13c030b4-62f5-446d-9bbd-c56d1ec3ee45)
 
-### 2. Enhanced System
-- **Added Components**
-  - Home/away performance (10%)
-  - Recent form (15%)
-  - Schedule strength
-  - Rest days impact
+1a: Your analytics staff’s first challenge is to rank the top 16 teams in three of four regions—West, North, and South—based on their regular season performance. 
 
-## Key Features
+1b: You’ll predict the winning probabilities for 10 first-round games in the East Region, including a play-in game.
 
-1. **Data Processing**
-   - Game-by-game statistics analysis
-   - Rolling performance metrics
-   - Team efficiency calculations
+1c: Tell your story and summarize your methodology. Craft a concise but comprehensive explanation of your approach.
 
-2. **Visualizations**
-   - Rating comparisons
-   - Performance trends
-   - Statistical correlations
+You and your team have been hard at work analyzing and using the data to come up with the best answers. Now it's time to share your predictions!
 
-3. **Analysis Tools**
-   - Team comparisons
-   - Performance prediction
-   - Trend analysis
-
-## Main Improvements
-1. 15% better predictive accuracy
-2. More stable ratings
-3. Better context consideration
-4. Improved trend tracking
-
-## Data Sources
-- Game statistics (2022 season)
-- Team information
-- Venue data
-- Schedule details
-
-## Real-World Applications
-1. **Team Analysis**
-   - Performance evaluation
-   - Strength assessment
-   - Trend identification
-
-2. **Game Predictions**
-   - Match outcome forecasting
-   - Performance projections
-   - Strategy planning
-
-3. **Season Planning**
-   - Schedule impact analysis
-   - Rest management
-   - Travel considerations
-
-## Future Development
-1. Dynamic weight adjustments
-2. More contextual factors
-3. Real-time updates
-4. Advanced analytics integration
-
-## Project Value
-- More accurate team evaluation
-- Better prediction capabilities
-- Comprehensive performance context
-- Data-driven decision support
-
-This project combines statistical analysis, data visualization, and basketball domain knowledge to create a practical tool for team evaluation and performance prediction.
