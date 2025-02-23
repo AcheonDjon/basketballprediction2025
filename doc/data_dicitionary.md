@@ -36,5 +36,3 @@ We assign weights based on impact strength on winning:
 | **DREB** | 0.07 | Limits opponent’s second chances |
 | **home_away_NS** | 0.06 | Home advantage improves performance |
 | **largest_lead** | 0.20 | Indicates dominance in the game |
-
-Would you like me to help refine this further using statistical analysis (e.g., correlation analysis or machine learning)?
