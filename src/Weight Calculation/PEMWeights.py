@@ -15,9 +15,9 @@ df['BLK%'] = df['BLK'] / df['FGA%']
 df['TOV%'] = df['TOV'] / df['Possessions']
 df['TOV_team%'] = df['TOV_team'] / df['Possessions']
 df['STL%'] = df['STL'] / df['Possessions']
-
+df['Foul_metric']
 # Define independent variables (predictors)
-X = df[['AST%', 'BLK%', 'TOV%', 'TOV_team%', 'STL%']]
+X = df[['AST%', 'BLK%', 'TOV%', 'TOV_team%', 'STL%', 'rebound_score']]
 
 # Define dependent variable (target)
 y = df['Point_Differential']
@@ -42,6 +42,6 @@ optimal_coefficients = lasso_cv.coef_
 print(f"Optimal Coefficients: {optimal_coefficients}")
 
 # Print the coefficients for each predictor
-coeff_names = ['AST%', 'BLK%', 'TOV%', 'TOV_team%', 'STL%']
+coeff_names = ['AST%', 'BLK%', 'TOV%', 'TOV_team%', 'STL%', 'rebound_score']
 for coeff_name, coeff_value in zip(coeff_names, optimal_coefficients):
     print(f"{coeff_name} Coefficient: {coeff_value}")

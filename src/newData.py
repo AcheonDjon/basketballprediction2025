@@ -14,11 +14,14 @@ Weights = {
     'FTA': 0.8520139945087526, 
     'TOV': -4.170418710132634, 
     'TOV_team': 0.429464666889546,
-    'AST%': 5.810465269474724,
-    'BLK%': -1.633597773818701,
-    'TOV%': -8.081674248752325,
-    'TOV_team%': -0.0,
-    'STL%': 2.7012735030119455
+    'AST%': 3.9014270102330824,
+    'BLK%': 0.3123520258870156,
+    'TOV%': -8.643599598081044,
+    'TOV_team%': 0.5942444055708388,
+    'STL%': 4.262306787690801,
+    'DREB': 9.080864321365597,
+    'OREB': 3.5261341400131774,
+    'rebound_score': 9.10538997274025
     }
 
 #Replacing original columns with a new FGA% Column
@@ -56,11 +59,14 @@ df['PEM'] = (Weights['AST%'] * df['AST%_Norm'] +
              Weights['BLK%'] * df['BLK%_Norm'] +
              Weights['TOV%'] * df['TOV%_Norm'] +
              Weights['TOV_team%'] * df['TOV_team%_Norm']+
-             Weights['STL%'] * df['STL%_Norm'])
+             Weights['STL%'] * df['STL%_Norm']+
+             Weights['rebound_score'] * df['rebound_score'])
+
+
 
 
 #Removes the Accounted Columns
 df.drop(columns=['AST%', 'BLK%', 'TOV%','STL%','TOV_team%', 'AST%_Norm', 'BLK%_Norm', 'TOV%_Norm', 'TOV_team%_Norm','STL%_Norm', 'Possessions'], inplace=True)
-df.drop(columns=['FGM_2', 'FGA_2', 'FGM_3', 'FGA_3', 'FTM', 'FTA', 'TOV', 'TOV_team', 'ORtg', 'DRtg'], inplace=True)
-df.drop(columns=['AST', 'BLK', 'STL'], inplace=True)
+df.drop(columns=['FGM_2', 'FGA_2', 'FGM_3', 'FGA_3', 'FTM', 'FTA', 'TOV', 'TOV_team', 'ORtg', 'DRtg', 'rebound_score'], inplace=True)
+df.drop(columns=['AST', 'BLK', 'STL', 'OREB', 'DREB'], inplace=True)
 df.to_csv("data/RaptorMerged.csv", sep="\t", index=False)
