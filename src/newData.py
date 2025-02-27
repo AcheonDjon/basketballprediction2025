@@ -14,14 +14,15 @@ Weights = {
     'FTA': 0.8520139945087526, 
     'TOV': -4.170418710132634, 
     'TOV_team': 0.429464666889546,
-    'AST%': 3.9014270102330824,
-    'BLK%': 0.3123520258870156,
-    'TOV%': -8.643599598081044,
-    'TOV_team%': 0.5942444055708388,
-    'STL%': 4.262306787690801,
+    'AST%': 3.180480905091572,
+    'BLK%': 0.05819808187071173,
+    'TOV%': -7.654816884269573,
+    'TOV_team%': 0.4310060400944508,
+    'STL%': 4.696642549469313,
     'DREB': 9.080864321365597,
     'OREB': 3.5261341400131774,
-    'rebound_score': 9.10538997274025
+    'rebound_score': 8.395971945172287,
+    'Foul': 4.4052999620240785
     }
 
 #Replacing original columns with a new FGA% Column
@@ -60,13 +61,16 @@ df['PEM'] = (Weights['AST%'] * df['AST%_Norm'] +
              Weights['TOV%'] * df['TOV%_Norm'] +
              Weights['TOV_team%'] * df['TOV_team%_Norm']+
              Weights['STL%'] * df['STL%_Norm']+
-             Weights['rebound_score'] * df['rebound_score'])
-
+             Weights['rebound_score'] * df['rebound_score']+
+             Weights['Foul'] * df['Foul'])
+df['WinPct'] = df['numwins'] / df['games_played']
+df['WinPct'] = (df['WinPct'] - 0.5) * 20
 
 
 
 #Removes the Accounted Columns
 df.drop(columns=['AST%', 'BLK%', 'TOV%','STL%','TOV_team%', 'AST%_Norm', 'BLK%_Norm', 'TOV%_Norm', 'TOV_team%_Norm','STL%_Norm', 'Possessions'], inplace=True)
 df.drop(columns=['FGM_2', 'FGA_2', 'FGM_3', 'FGA_3', 'FTM', 'FTA', 'TOV', 'TOV_team', 'ORtg', 'DRtg', 'rebound_score'], inplace=True)
-df.drop(columns=['AST', 'BLK', 'STL', 'OREB', 'DREB'], inplace=True)
+df.drop(columns=['AST', 'BLK', 'STL', 'OREB', 'DREB', 'Foul', 'F_tech', 'F_personal'], inplace=True)
+df.drop(columns=['team_score', 'opponent_team_score'], inplace=True)
 df.to_csv("data/RaptorMerged.csv", sep="\t", index=False)

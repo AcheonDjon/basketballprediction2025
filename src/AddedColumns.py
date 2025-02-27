@@ -11,5 +11,6 @@ df['TOV%'] = df['TOV'] / df['Possessions']
 df['TOV_team%'] = df['TOV_team'] / df['Possessions']
 df['STL%'] = df['STL'] / df['Possessions']
 df['games_played'] = df['games_played'] = df['team'].map(df['team'].value_counts())
+df['numwins'] = df['Win'].eq(1).groupby(df['team']).transform('sum')
 
 df.to_csv("data/merged_team_games.csv", sep="\t", index=False)
