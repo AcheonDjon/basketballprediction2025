@@ -57,5 +57,5 @@ df['PEM'] = (Weights['AST%'] * df['AST%_Norm'] +
 
 #Removes the Accounted Columns
 df.drop(columns=['AST%', 'BLK%', 'TOV%', 'TOV_team%', 'AST%_Norm', 'BLK%_Norm', 'TOV%_Norm', 'TOV_team%_Norm', 'Possessions'], inplace=True)
-df.drop(columns=['FGM_2', 'FGA_2', 'FGM_3', 'FGA_3', 'FTM', 'FTA', 'TOV', 'TOV_team'], inplace=True)
+df.drop(columns=['FGM_2', 'FGA_2', 'FGM_3', 'FGA_3', 'FTM', 'FTA', 'TOV', 'TOV_team', 'ORtg', 'DRtg'], inplace=True)
 df.to_csv("data/RaptorMerged.csv", sep="\t", index=False)
