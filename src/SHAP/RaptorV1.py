@@ -8,7 +8,7 @@ import numpy as np
 df = pd.read_csv("./data/SHAP/RaptorMerged.csv", sep="\t")
 
 # Example: Drop columns that are identifiers or not useful
-important = ['Point_Differential','FGA%', 'PEM', 'REBF', 'NRtg', 'WinPct']
+important = ['Point_Differential','FGA%', 'PEM', 'REBF', 'NRtg']
 
 # Define the target and feature set
 target = "Point_Differential"
@@ -45,8 +45,7 @@ df["Raptor_Score"] = (
     numerator_weights['FGA%'] * df["FGA%"] + 
     numerator_weights['PEM'] * df["PEM"] + 
     numerator_weights['REBF'] * df["REBF"] + 
-    numerator_weights['NRtg'] * df["NRtg"] +
-    numerator_weights['WinPct'] * df["WinPct"]
+    numerator_weights['NRtg'] * df["NRtg"] 
 )
 
 df.to_csv('./data/SHAP/RaptorMerged.csv', sep='\t', index=False)
