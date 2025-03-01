@@ -18,5 +18,4 @@ coeffs = model.coef_
 
 # Use the coefficients as weights to combine the defensive and offensive rebound scores
 df['Foul'] = (coeffs[0] * df['F_tech'] + coeffs[1] * df['F_personal']) / df['Possessions']
-df.drop(columns=['Foul Metric'], inplace=True)
 df.to_csv("data/merged_team_games.csv", sep="\t", index=False)
