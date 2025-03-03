@@ -10,5 +10,5 @@ df['WinPct'] = df['numwins'] / df['games_played']
 df['WinPct'] = (df['WinPct'] - 0.5) * 20
 
 
-df = df[['team', 'opponent_team', 'FGA%', 'PEM', 'REBF', 'NRtg', 'WinPct', 'Point_Differential']].copy()
+df = df[['team', 'opponent_team', 'eFG%', 'PEM', 'REBF', 'NRtg', 'WinPct', 'Point_Differential']].copy()
 df.to_csv('./data/SHAP/RaptorMerged.csv', sep='\t', index=False)

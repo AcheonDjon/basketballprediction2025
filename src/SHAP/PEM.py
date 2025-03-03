@@ -1,6 +1,6 @@
 import pandas as pd
 import xgboost as xgb
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 import shap
 import numpy as np
 
@@ -21,10 +21,19 @@ y = df[target]
 # Step 2: Split Data into Training and Testing Sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'learning_rate': [0.01, 0.1, 0.2],
+    'max_depth': [3, 4, 5]
+}
+
 # Step 3: Train a Tree-Based Model (e.g., XGBoost)
 model = xgb.XGBRegressor(random_state=42)
+grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=3, scoring='neg_mean_squared_error')
+grid_search.fit(X_train, y_train)
+best_params = grid_search.best_params_
+model = xgb.XGBRegressor(random_state=42, **best_params)
 model.fit(X_train, y_train)
-
 # Step 4: Initialize the SHAP Explainer and Calculate SHAP Values
 # For tree-based models, TreeExplainer is efficient.
 explainer = shap.Explainer(model, X_train)
@@ -45,11 +54,11 @@ print(numerator_weights)
 df["PEM"] = (
     numerator_weights['AST%'] * df["AST%"] + 
     numerator_weights['BLK%'] * df["BLK%"] + 
-    numerator_weights['TOV%'] * df["TOV%"] + 
-    numerator_weights['TOV_team%'] * df["TOV_team%"] +
+    numerator_weights['TOV%'] * df["TOV%"] -
+    numerator_weights['TOV_team%'] * df["TOV_team%"] -
     numerator_weights['STL%'] * df["STL%"]
 )
-df = df[['team', 'opponent_team', 'FGA%', 'PEM', 'REBF', 'NRtg', 'WinPct', 'Point_Differential']].copy()
+df = df[['team', 'opponent_team', 'eFG%', 'PEM', 'REBF', 'NRtg', 'WinPct', 'Point_Differential']].copy()
 df.to_csv('./data/SHAP/RaptorMerged.csv', sep='\t', index=False)
 
 # df.to_csv('./data/SHAP/RaptorMerged.csv', sep='\t', index=False)

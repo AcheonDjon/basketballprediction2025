@@ -4,9 +4,9 @@ df = pd.read_csv("data/merged_team_games.csv", sep="\t")
 
 df["Win"] = (df["team_score"] > df["opponent_team_score"]).astype(int)
 df['Point_Differential'] = df["team_score"] - df["opponent_team_score"]
-df['Possessions'] = df['team_score'] + 0.5 * df['FGA%'] - df['OREB'] + df['TOV'] + 0.4 * df['FTA']
+df['Possessions'] = df['team_score'] + 0.5 * (df['FGA_2'] + df['FGA_3']) + df['OREB'] + df['TOV'] + 0.4 * df['FTA']
 df['AST%'] = df['AST'] / (df['AST'] + df['TOV'])
-df['BLK%'] = df['BLK'] / df['FGA%']
+df['BLK%'] = df['BLK'] / (df['opponent_FGA2'] + df['opponent_FGA3'])
 df['TOV%'] = df['TOV'] / df['Possessions']
 df['TOV_team%'] = df['TOV_team'] / df['Possessions']
 df['STL%'] = df['STL'] / df['Possessions']
