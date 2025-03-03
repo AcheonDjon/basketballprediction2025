@@ -89,7 +89,7 @@ df['NRtg'] = df['ORtg'] - df['DRtg']
 
 ## 3. Final Composite Score (Raptor Score)
 
-After calculating the four metrics that cover shooting efficiency, player performance, rebounding/fouls, and overall game performance, we run a regression using XGBoost. In the final model, win percentage replaces point differential as the dependent variable to ensure that our weights align with the ultimate goal—winning games.
+After calculating the four metrics that cover shooting efficiency, player performance, rebounding/fouls, and overall game performance, we run a regression using XGBoost. In the final model, win percentage of the team across their season replaces point differential as the dependent variable to remove redundancy with NRtg and 
 
 The final Raptor Score is computed as follows:
 

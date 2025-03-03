@@ -20,5 +20,12 @@ df['opponent_FGA3'] = df.groupby('game_id')['FGA_3'].shift(1)
 df['opponent_FGA2'] = df['opponent_FGA2'].fillna(df.groupby('game_id')['FGA_2'].shift(-1))
 df['opponent_FGA3'] = df['opponent_FGA3'].fillna(df.groupby('game_id')['FGA_3'].shift(-1))
 
+# Create a new column 'opponent_FTA' by shifting the 'FTA' column
+df['opponent_FTA'] = df.groupby('game_id')['FTA'].shift(1)
+df['opponent_OREB'] = df.groupby('game_id')['OREB'].shift(1)
+df['opponent_TOV'] = df.groupby('game_id')['TOV'].shift(1)
+df['opponent_TOV_team'] = df.groupby('game_id')['TOV_team'].shift(1)
+
+
 # Save the updated dataframe to a new CSV file
 df.to_csv('./data/merged_team_games.csv', index=False, sep='\t')

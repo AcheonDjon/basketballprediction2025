@@ -20,7 +20,7 @@ y = df[target]
 
 # Step 2: Split Data into Training and Testing Sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-X_train_test, X_val_test, y_train_test, y_val_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
+X_train_optuna, X_val_optuna, y_train_optuna, y_val_optuna = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
 # Step 3: Define Bayesian Optimization Objective Function
 def objective(trial):
@@ -41,14 +41,14 @@ def objective(trial):
     }
 
     model = xgb.XGBRegressor(**params)
-    model.fit(X_train, y_train, eval_set=[(X_train, y_train)], verbose=False,)
+    model.fit(X_train_optuna, y_train_optuna, eval_set=[(X_val_optuna, y_val_optuna)], verbose=False,)
     
     # Evaluate using Mean Squared Error
-    predictions = model.predict(X_test)
-    mse = np.mean((y_test - predictions) ** 2)
+    predictions = model.predict(X_val_optuna)
+    mse = np.mean((y_val_optuna - predictions) ** 2)
     
     return mse  # Minimize MSE
-
+    
 # Step 4: Run Bayesian Optimization
 study = optuna.create_study(direction='minimize')  # Minimize MSE
 study.optimize(objective, n_trials=50)  # Run 50 trials

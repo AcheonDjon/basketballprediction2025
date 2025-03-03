@@ -18,6 +18,7 @@ y = df[target]
 
 # Step 2: Split Data into Training and Testing Sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train_optuna, X_val_optuna, y_train_optuna, y_val_optuna = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
 # Step 3: Define Bayesian Optimization Objective Function
 def objective(trial):
@@ -38,11 +39,11 @@ def objective(trial):
     }
 
     model = xgb.XGBRegressor(**params)
-    model.fit(X_train, y_train, eval_set=[(X_train, y_train)], verbose=False,)
+    model.fit(X_train_optuna, y_train_optuna, eval_set=[(X_val_optuna, y_val_optuna)], verbose=False,)
     
     # Evaluate using Mean Squared Error
-    predictions = model.predict(X_test)
-    mse = np.mean((y_test - predictions) ** 2)
+    predictions = model.predict(X_val_optuna)
+    mse = np.mean((y_val_optuna - predictions) ** 2)
     
     return mse  # Minimize MSE
 
@@ -82,11 +83,10 @@ print("Denominator Weights:", denom_weights)
 df["eFG%"] = (
     numerator_weights['FGM_2'] * df["FGM_2"] + 
     numerator_weights['FGM_3'] * df["FGM_3"] + 
-    numerator_weights['FTM'] * df["FTM"]
-) / (
-    denom_weights['FGA_2'] * df["FGA_2"] + 
+    numerator_weights['FTM'] * df["FTM"]/
+    (denom_weights['FGA_2'] * df["FGA_2"] +
     denom_weights['FGA_3'] * df["FGA_3"] +
-    denom_weights['FTA'] * df["FTA"] 
+    denom_weights['FTA'] * df["FTA"] )
 )
 
 # Step 8: Save Processed Data

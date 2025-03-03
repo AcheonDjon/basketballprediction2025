@@ -30,7 +30,10 @@ df_results = pd.DataFrame(results)
 # Sort the df_results by region and then by average RaptorScore
 df_results = df_results.sort_values(by=['Region', 'Avg RaptorScore'], ascending=[True, False])
 
-# Add a ranking column
-df_results['Rank'] = df_results.groupby('Region')['Avg RaptorScore'].rank(method='dense', ascending=False).astype(int)
+# Add a ranking column, handling potential NaN values
+df_results['Rank'] = df_results.groupby('Region')['Avg RaptorScore'].rank(method='dense', ascending=False)
+
+# Convert rank to int while safely handling NaNs
+df_results['Rank'] = df_results['Rank'].fillna(0).astype(int)
 
 df_results.to_csv('./output/SHAPRanking.csv', sep='\t', index=False)
