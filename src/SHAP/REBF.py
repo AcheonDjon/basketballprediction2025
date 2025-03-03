@@ -3,6 +3,7 @@ import xgboost as xgb
 from sklearn.model_selection import train_test_split, GridSearchCV
 import shap
 import numpy as np
+import optuna
 
 # Step 1: Load and Preprocess the Data
 df = pd.read_csv("./data/merged_team_games.csv", sep="\t")
@@ -19,19 +20,41 @@ y = df[target]
 
 # Step 2: Split Data into Training and Testing Sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train_test, X_val_test, y_train_test, y_val_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
-# Step 3: Train a Tree-Based Model (e.g., XGBoost)
-param_grid = {
-    'n_estimators': [100, 200, 300],
-    'learning_rate': [0.01, 0.1, 0.2],
-    'max_depth': [3, 4, 5]
-}
+# Step 3: Define Bayesian Optimization Objective Function
+def objective(trial):
+    """Objective function for Optuna to optimize XGBoost hyperparameters."""
+    params = {
+        'n_estimators': trial.suggest_int('n_estimators', 50, 500),
+        'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.3),
+        'max_depth': trial.suggest_int('max_depth', 3, 10),
+        'subsample': trial.suggest_float('subsample', 0.5, 1.0),
+        'colsample_bytree': trial.suggest_float('colsample_bytree', 0.5, 1.0),
+        'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
+        'gamma': trial.suggest_float('gamma', 0, 5),
+        'reg_alpha': trial.suggest_float('reg_alpha', 0, 1),
+        'reg_lambda': trial.suggest_float('reg_lambda', 0, 1),
+        'random_state': 42,
+        'eval_metric': 'rmse',
+        'early_stopping_rounds': 10
+    }
 
-# Step 3: Train a Tree-Based Model (e.g., XGBoost)
-model = xgb.XGBRegressor(random_state=42)
-grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=3, scoring='neg_mean_squared_error')
-grid_search.fit(X_train, y_train)
-best_params = grid_search.best_params_
+    model = xgb.XGBRegressor(**params)
+    model.fit(X_train, y_train, eval_set=[(X_train, y_train)], verbose=False,)
+    
+    # Evaluate using Mean Squared Error
+    predictions = model.predict(X_test)
+    mse = np.mean((y_test - predictions) ** 2)
+    
+    return mse  # Minimize MSE
+
+# Step 4: Run Bayesian Optimization
+study = optuna.create_study(direction='minimize')  # Minimize MSE
+study.optimize(objective, n_trials=50)  # Run 50 trials
+best_params = study.best_params
+
+
 model = xgb.XGBRegressor(random_state=42, **best_params)
 model.fit(X_train, y_train)
 

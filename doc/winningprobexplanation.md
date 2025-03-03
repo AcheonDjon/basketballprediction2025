@@ -176,6 +176,6 @@ print(f"UCF Knights win probability: {team2_prob:.2%}")
 **Output:**
 
 ```
-South Carolina Gamecocks win probability: 71.85%
-UCF Knights win probability: 28.15%
+South Carolina Gamecocks win probability: 71.95%
+UCF Knights win probability: 28.05%
 ```
