@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+Below is a refined markdown version that preserves your original content and style while reducing redundancy and improving clarity.
+
+---
+
+>>>>>>> 0799bca0ce71c45ac8f07054050db33a582ebba6
 # Composite-Score Ranking Methodology
 
 Based on the prompt to rank teams by quality, we decided to employ a composite-score ranking system rather than a traditional Elo system. While the Elo system focuses on wins, our approach requires a more holistic view by incorporating four key fields: **eFG%** (efficiency of field goals attempted), **PEM** (Player Efficiency Metric), **REBF** (Rebound and Foul), and **NRtg** (Net Rating).
@@ -14,6 +21,13 @@ We begin by computing the point differential as a basic measure of game outcome:
 df['Point_Differential'] = df["team_score"] - df["opponent_team_score"]
 ```
 
+<<<<<<< HEAD
+=======
+SHAP generates insightful charts (e.g., for eFG% weight calculation) that inform our weighting process.
+
+---
+
+>>>>>>> 0799bca0ce71c45ac8f07054050db33a582ebba6
 ## 2. Metric Calculations
 
 ### A. Effective Field Goal Percentage (eFG%)
